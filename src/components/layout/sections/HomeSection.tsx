@@ -1,4 +1,5 @@
 import { HiOutlineMail } from 'react-icons/hi';
+import { SheepScene } from '../../scene/SheepScene';
 
 export const HomeSection: React.FC = () => {
   return (
@@ -7,10 +8,13 @@ export const HomeSection: React.FC = () => {
       className="min-h-screen flex items-center justify-center px-6 py-24 pt-32"
     >
       <div className="max-w-4xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
-        {/* Custom Image Space - Circular placeholder */}
+        {/* 3D Sheep Space - Circular container */}
         <div className="flex justify-center md:justify-start">
-          <div className="w-56 h-56 md:w-64 md:h-64 rounded-full bg-linear-to-br from-slate-800 to-slate-900 flex items-center justify-center overflow-hidden">
-            <span className="text-slate-600 text-xs md:text-sm">Custom Image</span>
+          <div className="w-56 h-56 md:w-64 md:h-64 rounded-full flex items-center justify-center overflow-hidden relative">
+            {/* 3D Sheep Canvas */}
+            <div className="absolute inset-0">
+              <SheepScene />
+            </div>
           </div>
         </div>
 
