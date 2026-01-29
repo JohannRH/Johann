@@ -4,8 +4,8 @@
   :root {
     /* Base colors - backgrounds and surfaces */
     --color-bg-primary: rgb(9 9 11);        /* Main background (base-100) */
-    --color-bg-secondary: rgb(23 22 24);    /* Cards/sections (base-200) */
-    --color-bg-tertiary: rgb(30 29 31);     /* Elevated elements (base-300) */
+    --color-bg-secondary: rgb(29 28 30);    /* Cards/sections (base-200) */
+    --color-bg-tertiary: rgb(22 21 23);     /* Elevated elements (base-300) */
     
     /* Text colors */
     --color-text-primary: rgb(255 255 255);     /* Main text (base-content) - gold */
@@ -50,7 +50,12 @@
     --radius-full: 9999px;
   }
   
-  html,
+  html {
+    /* Fix navbar navigation - adds padding when scrolling to anchors */
+    scroll-padding-top: 80px;
+    scroll-behavior: smooth;
+  }
+
   body,
   #root {
     background-color: var(--color-bg-primary);

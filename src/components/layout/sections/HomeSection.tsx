@@ -5,7 +5,7 @@ export const HomeSection: React.FC = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center px-6 py-24 pt-32"
+      className="min-h-screen flex items-center justify-center px-6 py-20"
     >
       <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-3 md:gap-11 items-center">
         <div className="flex justify-center md:justify-end">

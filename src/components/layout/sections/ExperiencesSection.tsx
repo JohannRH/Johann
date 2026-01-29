@@ -49,7 +49,7 @@ export const ExperiencesSection: React.FC = () => {
   return (
     <section
       id="experiences"
-      className="min-h-screen flex items-center justify-center px-6 py-24"
+      className="min-h-[88vh] px-6"
     >
       <div className="max-w-4xl mx-auto w-full">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-primary flex items-center gap-3">
