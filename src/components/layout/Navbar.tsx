@@ -23,7 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sections }) => {
   );
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0c0a09]/80 backdrop-blur-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm">
       <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Navigation Links */}
         <div className="flex items-center gap-6 md:gap-8">
@@ -34,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sections }) => {
                 key={section}
                 href={`#${id}`}
                 onClick={(e) => handleNavClick(e, id)}
-                className="text-slate-300 hover:text-slate-100 transition-colors text-sm font-medium tracking-wide"
+                className="text-muted hover-text-primary transition-colors text-sm font-medium tracking-wide"
               >
                 {section}
               </a>
@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sections }) => {
           <a
             href="mailto:johannrestrepoh@gmail.com"
             aria-label="Email"
-            className="text-slate-400 hover:text-slate-100 transition-colors flex items-center justify-center"
+            className="text-muted hover-text-primary transition-colors flex items-center justify-center"
           >
             <MdEmail className="w-5 h-5" />
           </a>
@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sections }) => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-slate-400 hover:text-slate-100 transition-colors flex items-center justify-center"
+            className="text-muted hover-text-primary transition-colors flex items-center justify-center"
           >
             <FaGithub className="w-5 h-5" />
           </a>
@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sections }) => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="text-slate-400 hover:text-slate-100 transition-colors flex items-center justify-center"
+            className="text-muted hover-text-primary transition-colors flex items-center justify-center"
           >
             <FaLinkedin className="w-5 h-5" />
           </a>

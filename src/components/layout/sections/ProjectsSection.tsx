@@ -33,28 +33,28 @@ export const ProjectsSection: React.FC = () => {
       className="min-h-screen flex items-center justify-center px-6 py-24"
     >
       <div className="max-w-4xl mx-auto w-full">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-slate-100 flex items-center gap-3">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-primary flex items-center gap-3">
           <span>/</span>
           <span>projects</span>
-          <span className="flex-1 h-px bg-slate-700"></span>
+          <span className="flex-1 h-px bg-neutral"></span>
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-slate-900/30 rounded p-5 transition-colors flex flex-col h-full"
+              className="bg-tertiary rounded-md p-5 transition-colors flex flex-col h-full"
             >
-              <h3 className="text-lg font-semibold text-slate-100 mb-2">
+              <h3 className="text-lg font-semibold text-primary mb-2">
                 {project.title}
               </h3>
-              <p className="text-slate-400 mb-4 leading-relaxed text-sm grow">
+              <p className="text-secondary mb-4 leading-relaxed text-sm grow">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-2 py-1 bg-slate-800 text-slate-400 text-xs rounded"
+                    className="px-2 py-1 bg-hover text-secondary text-xs rounded"
                   >
                     {tech}
                   </span>
@@ -66,7 +66,7 @@ export const ProjectsSection: React.FC = () => {
                     href={project.previewUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-orange-500 hover:text-orange-400 text-sm font-medium transition-colors"
+                    className="text-accent-primary hover:text-accent-secondary text-sm font-medium transition-colors"
                   >
                     Preview →
                   </a>
@@ -76,7 +76,7 @@ export const ProjectsSection: React.FC = () => {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-slate-400 hover:text-slate-300 text-sm font-medium transition-colors"
+                    className="text-secondary hover:text-primary text-sm font-medium transition-colors"
                   >
                     GitHub →
                   </a>

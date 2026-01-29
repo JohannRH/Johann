@@ -66,15 +66,20 @@ export const Sheep: React.FC = () => {
       if (!material || Array.isArray(material)) return;
 
       const mat = material as THREE.MeshStandardMaterial;
+      mat.flatShading = true;
       mat.roughness = 0.9;
       mat.metalness = 0;
 
       const hsl = { h: 0, s: 0, l: 0 };
       mat.color.getHSL(hsl);
-      mat.color.setHSL(hsl.h, Math.min(hsl.s * 1.1, 1), Math.min(hsl.l * 1.08, 1));
+      mat.color.setHSL(hsl.h, Math.min(hsl.s * 1.8, 1), Math.min(hsl.l * 1.08, 1));
 
       obj.castShadow = false;
       obj.receiveShadow = false;
+      
+      if (obj.geometry) {
+        obj.geometry.computeVertexNormals();
+      }
     });
   }, [gltf.scene]);
 

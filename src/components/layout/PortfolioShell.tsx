@@ -10,7 +10,7 @@ const NAV_SECTIONS = ['Home', 'About', 'Experiences', 'Projects'];
 
 export const PortfolioShell: React.FC = () => {
   return (
-    <main className="relative z-10 min-h-screen bg-[#0c0a09] text-slate-100">
+    <main className="relative z-10 min-h-screen bg-secondary text-primary">
       <Navbar sections={NAV_SECTIONS} />
       <HomeSection />
       <AboutSection />

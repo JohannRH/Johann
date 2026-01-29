@@ -52,10 +52,10 @@ export const ExperiencesSection: React.FC = () => {
       className="min-h-screen flex items-center justify-center px-6 py-24"
     >
       <div className="max-w-4xl mx-auto w-full">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-slate-100 flex items-center gap-3">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-primary flex items-center gap-3">
           <span>/</span>
           <span>experience</span>
-          <span className="flex-1 h-px bg-slate-700"></span>
+          <span className="flex-1 h-px bg-neutral"></span>
         </h2>
         <div className="grid md:grid-cols-[200px_1fr] gap-8">
           {/* Experience List */}
@@ -66,13 +66,13 @@ export const ExperiencesSection: React.FC = () => {
                 onClick={() => handleSelect(exp.id)}
                 className={`relative w-full text-left py-3 px-4 transition-all duration-300 text-sm ${
                   selectedId === exp.id
-                    ? 'text-slate-100'
-                    : 'text-slate-500 hover:text-slate-300'
+                    ? 'text-primary'
+                    : 'text-muted hover-text-secondary'
                 }`}
               >
                 {/* Active indicator line */}
                 {selectedId === exp.id && (
-                  <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-orange-500 transition-all duration-300" />
+                  <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent-primary transition-all duration-300" />
                 )}
                 <span className="relative z-10">{exp.company.toUpperCase()}</span>
               </button>
@@ -110,14 +110,14 @@ export const ExperiencesSection: React.FC = () => {
                   }
                 >
                   <div>
-                    <h3 className="text-xl font-semibold text-slate-100 mb-1">
+                    <h3 className="text-xl font-semibold text-primary mb-1">
                       {selectedExperience.title}{' '}
-                      <span className="text-orange-500">@</span>{' '}
-                      <span className="text-orange-500">
+                      <span className="text-accent-primary">@</span>{' '}
+                      <span className="text-accent-primary">
                         {selectedExperience.company}
                       </span>
                     </h3>
-                    <p className="text-slate-400 text-sm mb-4">
+                    <p className="text-secondary text-sm mb-4">
                       {selectedExperience.period.toUpperCase()}
                     </p>
                   </div>
@@ -125,9 +125,9 @@ export const ExperiencesSection: React.FC = () => {
                     {selectedExperience.details.map((detail, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed"
+                        className="flex items-start gap-3 text-primary text-sm leading-relaxed"
                       >
-                        <span className="text-orange-500 mt-1.5 shrink-0">
+                        <span className="text-accent-primary mt-1.5 shrink-0">
                           ▸
                         </span>
                         <span>{detail}</span>

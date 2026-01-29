@@ -1,10 +1,99 @@
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    /* Base colors - backgrounds and surfaces */
+    --color-bg-primary: rgb(9 9 11);        /* Main background (base-100) */
+    --color-bg-secondary: rgb(23 22 24);    /* Cards/sections (base-200) */
+    --color-bg-tertiary: rgb(30 29 31);     /* Elevated elements (base-300) */
+    
+    /* Text colors */
+    --color-text-primary: rgb(255 255 255);     /* Main text (base-content) - gold */
+    --color-text-secondary: rgb(230 230 230);  /* Secondary text (secondary-content) */
+    --color-text-muted: rgb(200 200 200);      /* Muted/disabled text */
+    
+    /* Primary accent (white) */
+    --color-primary: rgb(220 165 77);      /* Main accent color */
+    --color-primary-hover: rgb(203 208 215); /* Hover state */
+    --color-primary-active: rgb(140 140 140); /* Active/pressed state */
+    
+    /* Secondary accent (dark blue) */
+    --color-secondary: rgb(21 39 71);
+    --color-secondary-hover: rgb(31 49 81);
+    
+    /* Accent (burgundy/purple) */
+    --color-accent: rgb(81 52 72);
+    --color-accent-hover: rgb(101 72 92);
+    
+    /* Neutral - for borders, dividers, and subtle backgrounds */
+    --color-neutral: rgb(51 24 0);
+    --color-neutral-light: rgb(71 44 20);
+    
+    /* Semantic colors */
+    --color-info: rgb(103 198 255);
+    --color-success: rgb(135 208 58);
+    --color-warning: rgb(226 213 99);
+    --color-error: rgb(255 111 111);
+    
+    /* Border and divider colors */
+    --color-border: rgb(50 50 52);
+    --color-divider: rgb(60 60 62);
+    
+    /* Interactive states */
+    --color-hover-bg: rgb(40 40 42);
+    --color-active-bg: rgb(35 35 37);
+    
+    /* Radii */
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 2rem;
+    --radius-full: 9999px;
+  }
+  
   html,
   body,
   #root {
-    @apply bg-[#0c0a09] text-slate-100;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
     min-height: 100%;
   }
+}
+
+/* Tailwind utilities using CSS variables */
+@layer utilities {
+  /* Background utilities */
+  .bg-primary { background-color: var(--color-bg-primary); }
+  .bg-secondary { background-color: var(--color-bg-secondary); }
+  .bg-tertiary { background-color: var(--color-bg-tertiary); }
+  .bg-hover { background-color: var(--color-hover-bg); }
+  
+  /* Text utilities */
+  .text-primary { color: var(--color-text-primary); }
+  .text-secondary { color: var(--color-text-secondary); }
+  .text-muted { color: var(--color-text-muted); }
+  
+  /* Accent utilities */
+  .text-accent-primary { color: var(--color-primary); }
+  .text-accent-secondary { color: var(--color-secondary); }
+  .text-accent { color: var(--color-accent); }
+  
+  .bg-accent-primary { background-color: var(--color-primary); }
+  .bg-accent-secondary { background-color: var(--color-secondary); }
+  .bg-neutral { background-color: var(--color-neutral-light); }
+  
+  /* Border utilities */
+  .border-default { border-color: var(--color-border); }
+  .border-accent-primary { border-color: var(--color-primary); }
+  .border-divider { border-color: var(--color-divider); }
+  
+  /* Semantic utilities */
+  .text-info { color: var(--color-info); }
+  .text-success { color: var(--color-success); }
+  .text-warning { color: var(--color-warning); }
+  .text-error { color: var(--color-error); }
+  
+  /* Hover utilities */
+  .hover-text-primary:hover { color: var(--color-text-primary); }
+  .hover-bg-primary:hover { background-color: var(--color-primary); }
+  .hover-bg-hover:hover { background-color: var(--color-hover-bg); }
 }
