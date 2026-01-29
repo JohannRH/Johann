@@ -1,5 +1,6 @@
 import { HiOutlineMail } from 'react-icons/hi';
-import { SheepScene } from '../../scene/SheepScene';
+import React, { lazy, Suspense } from 'react';
+const SheepScene = lazy(() => import('../../scene/SheepScene'));
 
 export const HomeSection: React.FC = () => {
   return (
@@ -10,9 +11,10 @@ export const HomeSection: React.FC = () => {
       <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-3 md:gap-11 items-center">
         <div className="flex justify-center md:justify-end">
           <div className="w-full h-64 md:h-96 relative">
-            {/* 3D Sheep Canvas */}
             <div className="absolute inset-0">
-              <SheepScene />
+              <Suspense fallback={null}>
+                <SheepScene />
+              </Suspense>
             </div>
           </div>
         </div>

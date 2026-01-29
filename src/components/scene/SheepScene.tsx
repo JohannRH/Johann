@@ -39,9 +39,10 @@ export const SheepScene: React.FC = () => {
         color="#ccddff"
       />
 
-      <Suspense fallback={null}>
+      <Suspense fallback={<group />}>
         <Sheep />
       </Suspense>
     </Canvas>
   );
 };
+export default SheepScene;
