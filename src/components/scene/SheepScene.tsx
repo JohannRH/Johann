@@ -11,10 +11,11 @@ export const SheepScene: React.FC = () => {
         antialias: true,
         alpha: true,
       }}
+      onCreated={(state) => {
+        state.gl.setClearColor(0x000000, 0);
+      }}
       dpr={[1, 2]}
     >
-      {/* Keep background transparent by leaving it unset (alpha: true). */}
-
       {/* Soft ambient light */}
       <ambientLight intensity={0.8} color="#ffeedd" />
       

@@ -1,5 +1,6 @@
 import { HiOutlineMail } from 'react-icons/hi';
 import React, { lazy, Suspense } from 'react';
+import { motion } from 'motion/react';
 const SheepScene = lazy(() => import('../../scene/SheepScene'));
 
 export const HomeSection: React.FC = () => {
@@ -12,32 +13,49 @@ export const HomeSection: React.FC = () => {
         <div className="flex justify-center md:justify-end">
           <div className="w-full h-64 md:h-96 relative">
             <div className="absolute inset-0">
-              <Suspense fallback={null}>
+              <Suspense fallback={<div className="w-full h-full bg-secondary" />}>
                 <SheepScene />
               </Suspense>
             </div>
           </div>
         </div>
 
-        {/* Text Content */}
+        {/* Text Content - Staggered animation */}
         <div className="space-y-6 text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary"
+          >
             Hi, I'm{' '}
             <span className="text-accent-primary">Johann</span>
-          </h1>
-          <p className="text-base md:text-lg text-secondary leading-relaxed">
+          </motion.h1>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="text-base md:text-lg text-secondary leading-relaxed"
+          >
             I am a software developer based in Colombia. Fascinated by exploring
             new things.
-          </p>
-          <div className="pt-4">
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="pt-4"
+          >
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:johannrestrepoh@gmail.com"
               className="inline-flex items-center gap-2 px-6 py-2.5 hover-bg-hover text-accent-primary border border-accent-primary font-medium rounded transition-colors text-sm"
             >
               <HiOutlineMail className="w-4 h-4" />
               Say hi!
             </a>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
