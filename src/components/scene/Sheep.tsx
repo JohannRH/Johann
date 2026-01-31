@@ -6,7 +6,8 @@ import * as THREE from 'three';
 export const Sheep: React.FC = () => {
   const gltf = useGLTF('/models/Sheep.gltf');
   const groupRef = useRef<THREE.Group>(null);
-  const mouseNdcRef = useRef({ x: 0, y: 0 });
+  // Initialize mouse to the right side (where text is)
+  const mouseNdcRef = useRef({ x: -0.5, y: 0 });
 
   const MODEL_FACES_POSITIVE_Z = true;
 
@@ -49,9 +50,9 @@ export const Sheep: React.FC = () => {
 
     // Generate random offsets for each leg for independent movement
     const offsets = legs.map(() => ({
-      phase: Math.random() * Math.PI * 2, // Random starting phase
-      speed: 1.5 + Math.random() * 0.5,   // Random speed between 1.5-2.0
-      amplitude: 0.06 + Math.random() * 0.04 // Random amplitude 0.06-0.10
+      phase: Math.random() * Math.PI * 2,
+      speed: 1.5 + Math.random() * 0.5,
+      amplitude: 0.06 + Math.random() * 0.04
     }));
 
     return { headRig: rig, legNodes: legs, legOffsets: offsets };
@@ -113,6 +114,13 @@ export const Sheep: React.FC = () => {
     duration: number;
   }>({ type: 'none', startTime: 0, duration: 0 });
 
+  // Entrance animation state
+  const entranceAnimRef = useRef({
+    startTime: 0,
+    duration: 0.8,
+    isComplete: false,
+  });
+
   useFrame(({ camera, clock }) => {
     const root = groupRef.current;
     if (!root) return;
@@ -121,70 +129,119 @@ export const Sheep: React.FC = () => {
     const { x, y } = mouseNdcRef.current;
     const time = clock.getElapsedTime();
 
-    // Trigger occasional special animations (every 8-10 seconds)
-    const timeSinceLastAnim = time - lastSpecialAnimTime.current;
-    const specialAnim = specialAnimState.current;
-    
-    if (specialAnim.type === 'none' && timeSinceLastAnim > 8 + Math.random() * 2) {
-      // Choose random animation (only hop or wiggle)
-      const animations = ['hop', 'wiggle'] as const;
-      const randomAnim = animations[Math.floor(Math.random() * animations.length)];
-      
-      specialAnimState.current = {
-        type: randomAnim,
-        startTime: time,
-        duration: 0.6 // All animations last 0.6 seconds
-      };
-      lastSpecialAnimTime.current = time;
+    // Entrance animation - scale up from 0.5 to 1.0
+    const entranceAnim = entranceAnimRef.current;
+    if (!entranceAnim.isComplete) {
+      if (entranceAnim.startTime === 0) {
+        entranceAnim.startTime = time;
+      }
+
+      const elapsed = time - entranceAnim.startTime;
+      const progress = Math.min(elapsed / entranceAnim.duration, 1);
+
+      // Easing function
+      const t = progress;
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      // Animate scale from 0 to 1 (applied on top of base 0.4 scale)
+      const entranceScale = 0.5 + (0.5 * eased);
+      root.scale.setScalar(0.4 * entranceScale);
+
+      // Animate opacity (fade in materials)
+      gltf.scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh && obj.material) {
+          const mat = obj.material as THREE.MeshStandardMaterial;
+          mat.opacity = eased;
+          mat.transparent = true;
+        }
+      });
+
+      if (progress >= 1) {
+        entranceAnim.isComplete = true;
+        // Reset to final scale and opacity
+        root.scale.setScalar(0.4);
+        gltf.scene.traverse((obj) => {
+          if (obj instanceof THREE.Mesh && obj.material) {
+            const mat = obj.material as THREE.MeshStandardMaterial;
+            mat.opacity = 1;
+            mat.transparent = false;
+          }
+        });
+      }
+
+      // Don't return - allow cursor tracking to work during entrance
+      // Only skip idle animations and special animations
     }
 
-    // Execute special animation if active
-    let specialBobOffset = 0;
-    let specialRotationOffset = 0;
-    
-    if (specialAnim.type !== 'none') {
-      const animProgress = (time - specialAnim.startTime) / specialAnim.duration;
+    // Only do idle animations and special animations if entrance is complete
+    const skipIdleAnimations = !entranceAnimRef.current.isComplete;
+
+    if (!skipIdleAnimations) {
+      // Trigger occasional special animations (every 8-10 seconds)
+      const timeSinceLastAnim = time - lastSpecialAnimTime.current;
+      const specialAnim = specialAnimState.current;
       
-      if (animProgress >= 1) {
-        // Animation finished
-        specialAnimState.current.type = 'none';
-      } else {
-        // Animation in progress
-        const easeInOut = animProgress < 0.5 
-          ? 2 * animProgress * animProgress 
-          : 1 - Math.pow(-2 * animProgress + 2, 2) / 2;
+      if (specialAnim.type === 'none' && timeSinceLastAnim > 8 + Math.random() * 2) {
+        const animations = ['hop', 'wiggle'] as const;
+        const randomAnim = animations[Math.floor(Math.random() * animations.length)];
         
-        switch (specialAnim.type) {
-          case 'hop':
-            // Quick hop up and down
-            specialBobOffset = Math.sin(animProgress * Math.PI) * 0.15;
-            break;
-          case 'wiggle':
-            // Body wiggle
-            specialRotationOffset = Math.sin(animProgress * Math.PI * 3) * 0.15 * (1 - easeInOut);
-            break;
-        }
+        specialAnimState.current = {
+          type: randomAnim,
+          startTime: time,
+          duration: 0.6
+        };
+        lastSpecialAnimTime.current = time;
       }
     }
 
-    // Simple idle animation - gentle bobbing + special animation offset
-    const bobAmount = Math.sin(time * 1.5) * 0.02 + specialBobOffset;
-    root.position.y = bobAmount;
+    // Execute special animation if active (only after entrance)
+    let specialBobOffset = 0;
+    let specialRotationOffset = 0;
     
-    // Apply wiggle rotation if active
-    if (specialRotationOffset !== 0) {
-      root.rotation.z = specialRotationOffset;
-    } else {
-      root.rotation.z = 0;
+    if (!skipIdleAnimations) {
+      const specialAnim = specialAnimState.current;
+      
+      if (specialAnim.type !== 'none') {
+        const animProgress = (time - specialAnim.startTime) / specialAnim.duration;
+        
+        if (animProgress >= 1) {
+          specialAnimState.current.type = 'none';
+        } else {
+          const easeInOut = animProgress < 0.5 
+            ? 2 * animProgress * animProgress 
+            : 1 - Math.pow(-2 * animProgress + 2, 2) / 2;
+          
+          switch (specialAnim.type) {
+            case 'hop':
+              specialBobOffset = Math.sin(animProgress * Math.PI) * 0.15;
+              break;
+            case 'wiggle':
+              specialRotationOffset = Math.sin(animProgress * Math.PI * 3) * 0.15 * (1 - easeInOut);
+              break;
+          }
+        }
+      }
+
+      // Simple idle animation - gentle bobbing + special animation offset
+      const bobAmount = Math.sin(time * 1.5) * 0.02 + specialBobOffset;
+      root.position.y = bobAmount;
+      
+      // Apply wiggle rotation if active
+      if (specialRotationOffset !== 0) {
+        root.rotation.z = specialRotationOffset;
+      } else {
+        root.rotation.z = 0;
+      }
+
+      // Animate legs
+      legNodes.forEach((leg, index) => {
+        const offset = legOffsets[index];
+        const swing = Math.sin(time * offset.speed + offset.phase) * offset.amplitude;
+        leg.rotation.x = swing;
+      });
     }
 
-    // Animate legs - each leg moves independently with random timing
-    legNodes.forEach((leg, index) => {
-      const offset = legOffsets[index];
-      // Each leg has its own phase, speed, and amplitude for floating effect
-      const swing = Math.sin(time * offset.speed + offset.phase) * offset.amplitude;
-      leg.rotation.x = swing;
-    });
+    // Cursor tracking - ALWAYS active (even during entrance)
 
     // Build world-space target
     tmpWorldTarget.current.set(x, y, 0.5).unproject(camera);

@@ -50,7 +50,7 @@ export const ExperiencesSection: React.FC = () => {
   return (
     <section
       id="experiences"
-      className="min-h-[88vh] px-6"
+      className="min-h-screen md:min-h-[88vh] px-6 py-32 md:py-0 -scroll-mt-32 md:scroll-mt-0"
     >
       <div className="max-w-4xl mx-auto w-full">
         <ScrollReveal>
