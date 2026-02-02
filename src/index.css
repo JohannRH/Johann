@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-family: "Geist", sans-serif;
+}
 
 @layer base {
   :root {
@@ -58,6 +63,7 @@
 
   body,
   #root {
+    font-family: var(--font-family);
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
     min-height: 100%;
