@@ -30,9 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({ sections }) => {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-10 bg-secondary"
     >
-      <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Navigation Links */}
-        <div className="flex items-center gap-6 md:gap-8">
+      <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-center md:justify-between">
+        {/* Navigation Links - hidden on mobile */}
+        <div className="hidden md:flex items-center gap-6 md:gap-8">
           {sections.map((section, index) => {
             const id = section.toLowerCase().replace(/\s+/g, '-');
             return (
